@@ -22,9 +22,9 @@ def connect_to_sheets():
             logging.info("Usando credenciais do Streamlit Secrets.")
             creds_dict = dict(st.secrets["gcp_service_account"])
             # Se a private_key tiver quebras de linha escapadas, conserte
-             if "private_key" in creds_dict:
-                  # Normaliza a chave privada (converte \\n e \\\\n para \n real)
-                  creds_dict["private_key"] = creds_dict["private_key"].replace("\\\\n", "\n").replace("\\n", "\n")
+            if "private_key" in creds_dict:
+                 # Normaliza a chave privada (converte \\n e \\\\n para \n real)
+                 creds_dict["private_key"] = creds_dict["private_key"].replace("\\\\n", "\n").replace("\\n", "\n")
             
             creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
             client = gspread.authorize(creds)
