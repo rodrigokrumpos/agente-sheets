@@ -97,6 +97,10 @@ def append_to_sheet(data, spreadsheet_id=None):
         
         # Mapeamento dos dados para as colunas A-G
         # A: Date, B: Empreendimento, C: ID, D: Email, E: Nome, F: CPF, G: Zap
+        # Limpeza do telefone (remove aspas e caracteres não numéricos)
+        raw_phone = str(data.get('whatsapp', ''))
+        clean_phone = ''.join(filter(str.isdigit, raw_phone))
+        
         row = [
             current_time,                       # A: Carimbo de data/hora
             data.get('empreendimento', ''),     # B: Empreendimento
@@ -104,7 +108,7 @@ def append_to_sheet(data, spreadsheet_id=None):
             "",                                 # D: Endereço de e-mail (Vazio)
             data.get('nome', ''),               # E: Qual o seu nome completo?
             "",                                 # F: Qual o número do seu CPF? (Vazio)
-            data.get('whatsapp', '')            # G: Qual o seu Celular?
+            clean_phone                         # G: Qual o seu Celular? (Limpo)
         ]
         
         logging.info(f"Adicionando registro (ID: {record_id}): {row}")
